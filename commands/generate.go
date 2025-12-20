@@ -2,8 +2,10 @@ package commands
 
 import (
 	"html/template"
+	"io"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 )
 
@@ -11,16 +13,18 @@ func Generate() {
 	clearOutputDir()
 	createOutputDir()
 
-	buildIndexPage()
+	generateIndexPage()
 	copyAssets()
+	bundleJS()
 }
 
 type IndexData struct {
-	Title         string
-	StyleFileName string
+	Title          string
+	ScriptFileName string
+	StyleFileName  string
 }
 
-func buildIndexPage() {
+func generateIndexPage() {
 	tmpl := parseIndexTemplate()
 	out, err := os.Create(filepath.Join(Config.outputDir, "index.html"))
 	if err != nil {
@@ -28,10 +32,14 @@ func buildIndexPage() {
 	}
 	defer out.Close()
 	data := IndexData{
-		Title:         "wasm calculator",
-		StyleFileName: filepath.Join(Config.assetDir, "index.css"),
+		Title:          "wasm calculator",
+		ScriptFileName: "bundle.js",
+		StyleFileName:  filepath.Join(Config.assetDir, "index.css"),
 	}
-	tmpl.Execute(out, data)
+	err = tmpl.Execute(out, data)
+	if err != nil {
+		log.Fatal("failed to execute tmpl", err)
+	}
 }
 
 func createOutputDir() {
@@ -58,4 +66,42 @@ func parseIndexTemplate() *template.Template {
 
 func copyAssets() {
 	os.CopyFS(filepath.Join(Config.outputDir, Config.assetDir), os.DirFS(Config.assetDir))
+}
+
+func bundleJS() {
+	log.Print("Bundling JS ...")
+	buildCmd := exec.Command("npm", "run", "build")
+	buildCmd.Dir = "ts"
+	err := buildCmd.Run()
+	if err != nil {
+		log.Fatal("failed to bundle JS", err)
+	}
+	srcFileName := filepath.Join("ts", "bundle.js")
+	destFileName := filepath.Join(Config.outputDir, "bundle.js")
+	copyFile(srcFileName, destFileName)
+	copyFile(srcFileName+".map", destFileName+".map")
+}
+
+func copyFile(src string, dest string) {
+	srcFile, err := os.Open(src)
+	if err != nil {
+		log.Fatal("failed to open srcFile", err)
+	}
+	defer srcFile.Close()
+
+	destFile, err := os.Create(dest)
+	if err != nil {
+		log.Fatal("failed to creat destFile", err)
+	}
+	defer destFile.Close()
+
+	_, err = io.Copy(destFile, srcFile)
+	if err != nil {
+		log.Fatal("failed to copy file", err)
+	}
+
+	err = destFile.Sync()
+	if err != nil {
+		log.Fatal("failed to sync destFile", err)
+	}
 }

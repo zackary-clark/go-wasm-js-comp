@@ -7,7 +7,7 @@ import (
 )
 
 func Serve() {
-	log.Printf("serve from port: %d\nEventually Anyway...\n", Config.port)
+	log.Printf("Serving from port: %d...\n", Config.port)
 
 	fs := http.FileServer(http.Dir(Config.outputDir))
 	http.Handle("/", http.StripPrefix("/", fs))
