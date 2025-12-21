@@ -33,7 +33,7 @@ the site, and publishes to GH Pages.
 - [x] favicon
 - [x] GH Pages
 - [x] GH Action
-- [ ] GH Page custom domain
+- [x] GH Page custom domain
 - [ ] watch command 1 - watch for css and ts file changes
 - [ ] watch command 2 - watch for go file changes
 - [ ] WASM module
