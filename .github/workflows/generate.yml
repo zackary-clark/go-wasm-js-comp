@@ -1,5 +1,7 @@
-
 name: Generate
+
+permissions:
+  id-token: write
 
 on:
   push:
