@@ -7,6 +7,6 @@ vet: fmt
 build: vet
 	go build
 generate: build
-	./go-wasm-calc generate
+	./go-wasm-js-comp generate
 serve: generate
-	./go-wasm-calc serve
+	./go-wasm-js-comp serve

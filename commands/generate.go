@@ -34,7 +34,7 @@ func generateIndexPage() {
 	defer out.Close()
 	data := IndexData{
 		FaviconFileName: filepath.Join(Config.assetDir, "gopher_favicon.svg"),
-		Title:           "wasm calculator",
+		Title:           "go wasm",
 		ScriptFileName:  "bundle.js",
 		StyleFileName:   "bundle.css",
 	}

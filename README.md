@@ -1,4 +1,4 @@
-# Pure Go Web Calculator
+# Pure Go Site Comparing WASM to JS Implementations
 
 ## Idea
 

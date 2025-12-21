@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/zackary-clark/go-wasm-calc/commands"
+	"github.com/zackary-clark/go-wasm-js-comp/commands"
 )
 
 func main() {

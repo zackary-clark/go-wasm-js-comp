@@ -1,5 +1,5 @@
 out/
-go-wasm-calc
+go-wasm-js-comp
 
 **/node_modules/**
 
