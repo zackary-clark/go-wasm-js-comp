@@ -23,7 +23,7 @@ bundle, and assets, and serves the site at `localhost:8080`
 
 - [x] bundled typescript
 - [x] bundled css
-- [ ] favicon
+- [x] favicon
 - [ ] GH Pages
 - [ ] GH Action
 - [ ] GH Page custom domain

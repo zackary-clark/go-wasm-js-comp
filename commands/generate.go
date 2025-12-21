@@ -19,9 +19,10 @@ func Generate() {
 }
 
 type IndexData struct {
-	Title          string
-	ScriptFileName string
-	StyleFileName  string
+	FaviconFileName string
+	Title           string
+	ScriptFileName  string
+	StyleFileName   string
 }
 
 func generateIndexPage() {
@@ -32,9 +33,10 @@ func generateIndexPage() {
 	}
 	defer out.Close()
 	data := IndexData{
-		Title:          "wasm calculator",
-		ScriptFileName: "bundle.js",
-		StyleFileName:  "bundle.css",
+		FaviconFileName: filepath.Join(Config.assetDir, "gopher_favicon.svg"),
+		Title:           "wasm calculator",
+		ScriptFileName:  "bundle.js",
+		StyleFileName:   "bundle.css",
 	}
 	err = tmpl.Execute(out, data)
 	if err != nil {
