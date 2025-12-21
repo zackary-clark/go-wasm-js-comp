@@ -2,4 +2,6 @@ out/
 go-wasm-calc
 
 **/node_modules/**
-ts/bundle.js*
+
+**/bundle.js*
+**/bundle.css

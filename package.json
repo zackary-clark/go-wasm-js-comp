@@ -1,0 +1,12 @@
+{
+    "name": "go-wasm-calc",
+    "main": "ts/index.ts",
+    "scripts": {
+        "prebuild": "npm install",
+        "build": "esbuild ts/index.ts --bundle --outfile=bundle.js --sourcemap --analyze && esbuild stylesheets/index.css --bundle --outfile=bundle.css --analyze"
+    },
+    "devDependencies": {
+        "esbuild": "0.27.2",
+        "typescript": "5.9.3"
+    }
+}

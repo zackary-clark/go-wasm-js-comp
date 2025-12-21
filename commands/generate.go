@@ -34,7 +34,7 @@ func generateIndexPage() {
 	data := IndexData{
 		Title:          "wasm calculator",
 		ScriptFileName: "bundle.js",
-		StyleFileName:  filepath.Join(Config.assetDir, "index.css"),
+		StyleFileName:  "bundle.css",
 	}
 	err = tmpl.Execute(out, data)
 	if err != nil {
@@ -76,10 +76,13 @@ func bundleJS() {
 	if err != nil {
 		log.Fatal("failed to bundle JS", err)
 	}
-	srcFileName := filepath.Join("ts", "bundle.js")
-	destFileName := filepath.Join(Config.outputDir, "bundle.js")
-	copyFile(srcFileName, destFileName)
-	copyFile(srcFileName+".map", destFileName+".map")
+	srcJSName := filepath.Join("bundle.js")
+	destJSName := filepath.Join(Config.outputDir, "bundle.js")
+	srcStyleName := filepath.Join("bundle.css")
+	destStyleName := filepath.Join(Config.outputDir, "bundle.css")
+	copyFile(srcJSName, destJSName)
+	copyFile(srcJSName+".map", destJSName+".map")
+	copyFile(srcStyleName, destStyleName)
 }
 
 func copyFile(src string, dest string) {

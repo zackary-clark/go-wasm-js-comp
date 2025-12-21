@@ -1,0 +1,50 @@
+:root {
+    --bg1: #33353F;
+    --bg2: #363944;
+    --bg3: #3B3E48;
+    --bg4: #414550;
+    --bg_blue: #354157;
+    --bg_dim: #24262A;
+    --bg_green: #394634;
+    --bg_grey: #828A98;
+    --bg_purple: #493C53;
+    --bg_red: #55393D;
+    --bg_yellow: #4E432F;
+    --bgo: #2C2E34;
+    --black: #202023;
+    --blue: #6CB6EB;
+    --cyan: #5DBBC1;
+    --fg: #C5CDD9;
+    --filled_blue: #6CB6EB;
+    --filled_green: #A0C980;
+    --filled_purple: #D38AEA;
+    --filled_red: #EC7279;
+    --green: #A0C980;
+    --grey: #758094;
+    --grey_dim: #535C6A;
+    --purple: #D38AEA;
+    --red: #EC7279;
+    --yellow: #DEB974;
+
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+    color-scheme: light dark;
+    color: var(--fg);
+    background-color: var(--bg_green);
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::placeholder {
+    color: var(--grey_dim);
+}
+
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}
