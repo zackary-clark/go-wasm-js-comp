@@ -3,5 +3,7 @@ go-wasm-js-comp
 
 **/node_modules/**
 
-**/bundle.js*
-**/bundle.css
+**/bundle*.js*
+**/bundle*.css
+
+wasm/main.wasm

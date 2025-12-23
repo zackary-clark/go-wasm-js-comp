@@ -8,6 +8,13 @@
     <link href="{{.FaviconFileName}}" rel="icon" />
     <link href="{{.StyleFileName}}" rel="stylesheet" />
     <script src="{{.ScriptFileName}}"></script>
+    <script src="wasm_exec.js"></script>
+    <script>
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+            go.run(result.instance);
+        });
+    </script>
 </head>
 
 <body>
