@@ -3,7 +3,7 @@
     "main": "ts/index.ts",
     "scripts": {
         "prebuild": "npm install",
-        "build": "esbuild ts/index.ts --bundle --outfile=bundle.js --sourcemap --analyze && esbuild stylesheets/index.css --bundle --outfile=bundle.css --analyze"
+        "build": "esbuild ts/index.ts stylesheets/index.css --bundle --outdir=$BUILD_OUTPUT_DIR --sourcemap --analyze --entry-names=bundle-[hash]"
     },
     "devDependencies": {
         "esbuild": "0.27.2",

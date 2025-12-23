@@ -2,20 +2,20 @@ package commands
 
 import (
 	"html/template"
-	"io"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
 func Generate() {
 	clearOutputDir()
 	createOutputDir()
 
-	generateIndexPage()
-	copyAssets()
 	bundleJS()
+	copyAssets()
+	generateIndexPage()
 }
 
 type IndexData struct {
@@ -32,11 +32,25 @@ func generateIndexPage() {
 		log.Fatal("failed to create indexFile")
 	}
 	defer out.Close()
+	dir, err := os.ReadDir(Config.outputDir)
+	if err != nil {
+		log.Fatal("failed to read outputDir")
+	}
+	scriptFileName := ""
+	styleFileName := ""
+	for _, file := range dir {
+		if strings.HasSuffix(file.Name(), ".css") {
+			styleFileName = file.Name()
+		}
+		if strings.HasSuffix(file.Name(), ".js") {
+			scriptFileName = file.Name()
+		}
+	}
 	data := IndexData{
 		FaviconFileName: filepath.Join(Config.assetDir, "gopher_favicon.svg"),
 		Title:           "go wasm",
-		ScriptFileName:  "bundle.js",
-		StyleFileName:   "bundle.css",
+		ScriptFileName:  scriptFileName,
+		StyleFileName:   styleFileName,
 	}
 	err = tmpl.Execute(out, data)
 	if err != nil {
@@ -71,42 +85,11 @@ func copyAssets() {
 }
 
 func bundleJS() {
-	log.Print("Bundling JS ...")
 	buildCmd := exec.Command("npm", "run", "build")
 	buildCmd.Dir = "ts"
+	buildCmd.Env = append(buildCmd.Environ(), "BUILD_OUTPUT_DIR="+Config.outputDir)
 	err := buildCmd.Run()
 	if err != nil {
 		log.Fatal("failed to bundle JS", err)
-	}
-	srcJSName := filepath.Join("bundle.js")
-	destJSName := filepath.Join(Config.outputDir, "bundle.js")
-	srcStyleName := filepath.Join("bundle.css")
-	destStyleName := filepath.Join(Config.outputDir, "bundle.css")
-	copyFile(srcJSName, destJSName)
-	copyFile(srcJSName+".map", destJSName+".map")
-	copyFile(srcStyleName, destStyleName)
-}
-
-func copyFile(src string, dest string) {
-	srcFile, err := os.Open(src)
-	if err != nil {
-		log.Fatal("failed to open srcFile", err)
-	}
-	defer srcFile.Close()
-
-	destFile, err := os.Create(dest)
-	if err != nil {
-		log.Fatal("failed to creat destFile", err)
-	}
-	defer destFile.Close()
-
-	_, err = io.Copy(destFile, srcFile)
-	if err != nil {
-		log.Fatal("failed to copy file", err)
-	}
-
-	err = destFile.Sync()
-	if err != nil {
-		log.Fatal("failed to sync destFile", err)
 	}
 }

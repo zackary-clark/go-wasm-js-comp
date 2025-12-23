@@ -13,13 +13,16 @@ and with code rendered side by side.
 - esbuild
 - npm
 
+- fswatch (for `make watch` only)
+
 ### Dev Guide
 
 #### Local Dev Server
 
-`make serve` does it all. Compiles the Go project, installs (the few) npm
-dependencies, builds the JS/TS/CSS bundles, generates the static site from templates,
-bundle, and assets, and serves the site at `localhost:8080`
+`make watch` builds the go app, generates the static site, and watches the
+`ts`, `templates`, and `stylesheets` directories to regenerate the site
+
+`make serve` serves the site (generated with `make generate` or `make watch`) at `localhost:8080`
 
 #### Deployment
 
@@ -34,7 +37,7 @@ the site, and publishes to GH Pages.
 - [x] GH Pages
 - [x] GH Action
 - [x] GH Page custom domain
-- [ ] watch command 1 - watch for css and ts file changes
-- [ ] watch command 2 - watch for go file changes
+- [x] watch command 1 - watch for css and ts file changes
 - [ ] WASM module
+- [ ] watch command 2 - watch for go file changes
 - [ ] Calc.Add
