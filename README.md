@@ -39,5 +39,5 @@ the site, and publishes to GH Pages.
 - [x] GH Page custom domain
 - [x] watch command 1 - watch for css and ts file changes
 - [x] WASM module
-- [ ] watch command 2 - watch for go file changes
+- [x] watch command 2 - watch for go file changes
 - [ ] Calc.Add

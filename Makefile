@@ -12,10 +12,10 @@ wasm:
 	$(MAKE) -C wasm build
 generate: wasm build
 	./go-wasm-js-comp generate && cp ./wasm/wasm_exec.js out/ && cp ./wasm/main.wasm out/
-watch: build
+watch: wasm build
 	while true; do \
-		./go-wasm-js-comp generate; \
-		fswatch -1 ./ts ./templates ./stylesheets || break; \
+		$(MAKE) generate; \
+		fswatch -1 ./ts ./templates ./stylesheets ./wasm ./commands || break; \
     done
 serve: build
 	./go-wasm-js-comp serve
