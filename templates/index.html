@@ -31,6 +31,23 @@
         This is, more than anything, an excuse to play with Go in various contexts - command line tooling, static site
         generation, a basic calculator implementation, and some WASM.
     </p>
+
+    <article id="add">
+        <h2>Add</h2>
+        <input type="number" class="a" />
+        <input type="number" class="b" />
+        <div class="wasm-output">
+            WASM:
+            <input type="number" class="out" disabled />
+            <p class="time"></p>
+        </div>
+        <div class="js-output">
+            JS:
+            <input type="number" class="out" disabled />
+            <p class="time"></p>
+        </div>
+        <button onclick="add();">Add</button>
+    </article>
 </body>
 
 </html>
