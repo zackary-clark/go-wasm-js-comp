@@ -15,6 +15,24 @@
             go.run(result.instance);
         });
     </script>
+    <script>
+        function call(callbackName) {
+            const startTime = performance.now();
+            let out;
+            try {
+                out = globalThis[callbackName]();
+            } catch (e) {
+                console.error("error thrown by %s: ", callbackName, e);
+            } finally {
+                const measure = performance.measure(
+                    callbackName,
+                    {start: startTime, end: performance.now()}
+                );
+                console.log(`${callbackName} duration: `, measure.duration)
+            }
+            return out;
+        }
+    </script>
 </head>
 
 <body>
@@ -32,22 +50,21 @@
         generation, a basic calculator implementation, and some WASM.
     </p>
 
-    <article id="add">
-        <h2>Add</h2>
-        <input type="number" class="a" />
-        <input type="number" class="b" />
-        <div class="wasm-output">
-            WASM:
-            <input type="number" class="out" disabled />
-            <p class="time"></p>
-        </div>
-        <div class="js-output">
-            JS:
-            <input type="number" class="out" disabled />
-            <p class="time"></p>
-        </div>
-        <button onclick="add();">Add</button>
-    </article>
+    <section id="comparisons">
+        <article id="add-article">
+            <h3>Add</h3>
+            <form id="add-form">
+                <input type="number" name="a" />
+                +
+                <input type="number" name="b" />
+                <button onclick="call('addJS');call('addWASM')" type="button">=</button>
+                <label for="add-js-out">JS: </label>
+                <output class="out" name="js-out" id="add-js-out" for="a b"></output>
+                <label for="add-wasm-out">WASM: </label>
+                <output class="out" name="wasm-out" id="add-wasm-out" for="a b"></output>
+            </form>
+        </article>
+    </section>
 </body>
 
 </html>
