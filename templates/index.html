@@ -11,7 +11,7 @@
     <script src="wasm_exec.js"></script>
     <script>
         const go = new Go();
-        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+        WebAssembly.instantiateStreaming(fetch("bundle.wasm"), go.importObject).then((result) => {
             go.run(result.instance);
         });
     </script>
@@ -51,32 +51,8 @@
     </p>
 
     <section id="comparisons">
-        <article id="add-article">
-            <h3>Add</h3>
-            <form id="add-form">
-                <input type="number" name="a" />
-                +
-                <input type="number" name="b" />
-                <button onclick="call('addJS');call('addWASM');" type="button">=</button>
-                <label for="add-js-out">JS: </label>
-                <output class="out" name="js-out" id="add-js-out" for="a b"></output>
-                <label for="add-wasm-out">WASM: </label>
-                <output class="out" name="wasm-out" id="add-wasm-out" for="a b"></output>
-            </form>
-        </article>
-        <article id="mult-article">
-            <h3>Mult</h3>
-            <form id="mult-form">
-                <input type="number" name="a" />
-                *
-                <input type="number" name="b" />
-                <button onclick="call('multJS');call('multWASM');" type="button">=</button>
-                <label for="add-js-out">JS: </label>
-                <output class="out" name="js-out" id="add-js-out" for="a b"></output>
-                <label for="add-wasm-out">WASM: </label>
-                <output class="out" name="wasm-out" id="add-wasm-out" for="a b"></output>
-            </form>
-        </article>
+        {{template "add"}}
+        {{template "mult"}}
     </section>
 </body>
 

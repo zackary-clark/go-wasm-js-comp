@@ -11,7 +11,7 @@ build: vet
 wasm:
 	$(MAKE) -C wasm build
 generate: wasm build
-	./go-wasm-js-comp generate && cp ./wasm/wasm_exec.js out/ && cp ./wasm/main.wasm out/
+	./go-wasm-js-comp generate && cp ./wasm/wasm_exec.js out/ && cp ./wasm/bundle.wasm out/
 watch: wasm build
 	while true; do \
 		$(MAKE) generate; \

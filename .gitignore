@@ -6,4 +6,4 @@ go-wasm-js-comp
 **/bundle*.js*
 **/bundle*.css
 
-wasm/main.wasm
+wasm/bundle.wasm

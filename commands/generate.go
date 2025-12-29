@@ -26,7 +26,7 @@ type IndexData struct {
 }
 
 func generateIndexPage() {
-	tmpl := parseIndexTemplate()
+	templates := parseTemplates()
 	out, err := os.Create(filepath.Join(Config.outputDir, "index.html"))
 	if err != nil {
 		log.Fatal("failed to create indexFile")
@@ -52,7 +52,7 @@ func generateIndexPage() {
 		ScriptFileName:  scriptFileName,
 		StyleFileName:   styleFileName,
 	}
-	err = tmpl.Execute(out, data)
+	err = templates.ExecuteTemplate(out, "index.html", data)
 	if err != nil {
 		log.Fatal("failed to execute tmpl", err)
 	}
@@ -72,12 +72,9 @@ func clearOutputDir() {
 	}
 }
 
-func parseIndexTemplate() *template.Template {
-	tmpl, err := template.ParseGlob("templates/index.html")
-	if err != nil {
-		log.Fatal("failed to parse template")
-	}
-	return tmpl
+func parseTemplates() *template.Template {
+	templates := template.Must(template.ParseGlob("templates/*.html"))
+	return templates
 }
 
 func copyAssets() {

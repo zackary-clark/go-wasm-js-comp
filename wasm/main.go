@@ -7,28 +7,25 @@ import (
 )
 
 func main() {
-	c := make(chan struct{}, 0)
-	js.Global().Set("addWASM", js.FuncOf(add))
-	js.Global().Set("multWASM", js.FuncOf(mult))
-	<-c
+	randomChannel := make(chan struct{}, 0)
+	js.Global().Set("addWASM", js.FuncOf(Add))
+	js.Global().Set("multWASM", js.FuncOf(Mult))
+	<-randomChannel
 }
 
-func mult(this js.Value, args []js.Value) any {
-	form := js.Global().Get("document").Call("getElementById", "mult-form")
-	a := form.Get("elements").Get("a").Get("valueAsNumber").Float()
-	b := form.Get("elements").Get("b").Get("valueAsNumber").Float()
-	c := a * b
-	output := form.Get("elements").Get("wasm-out")
-	output.Set("value", js.ValueOf(c))
-	return ""
+func SetOutput(form js.Value, fieldName string, value float64) {
+	output := GetFieldFromForm(form, "wasm-out")
+	output.Set("value", js.ValueOf(value))
 }
 
-func add(this js.Value, args []js.Value) any {
-	form := js.Global().Get("document").Call("getElementById", "add-form")
-	a := form.Get("elements").Get("a").Get("valueAsNumber").Float()
-	b := form.Get("elements").Get("b").Get("valueAsNumber").Float()
-	c := a + b
-	output := form.Get("elements").Get("wasm-out")
-	output.Set("value", js.ValueOf(c))
-	return ""
+func GetFloatFromForm(form js.Value, fieldName string) float64 {
+	return GetFieldFromForm(form, fieldName).Get("valueAsNumber").Float()
+}
+
+func GetFieldFromForm(form js.Value, fieldName string) js.Value {
+	return form.Get("elements").Get(fieldName)
+}
+
+func GetElementById(id string) js.Value {
+	return js.Global().Get("document").Call("getElementById", id)
 }

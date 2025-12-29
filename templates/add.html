@@ -1,0 +1,15 @@
+{{define "add"}}
+<article id="add-article">
+    <h3>Add</h3>
+    <form id="add-form">
+        <input type="number" name="a" />
+        +
+        <input type="number" name="b" />
+        <button onclick="call('addJS');call('addWASM');" type="button">=</button>
+        <label for="add-js-out">JS: </label>
+        <output class="out" name="js-out" id="add-js-out" for="a b"></output>
+        <label for="add-wasm-out">WASM: </label>
+        <output class="out" name="wasm-out" id="add-wasm-out" for="a b"></output>
+    </form>
+</article>
+{{end}}
